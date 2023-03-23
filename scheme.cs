@@ -66,13 +66,13 @@ namespace Schema
             return JsonSerializer.Deserialize<Scheme>(File.ReadAllText(path));
         }
 
-        public static bool IsCorrespondsToScheme(Scheme scheme, string line)
+        public static bool IsCorrespondsToScheme(Scheme scheme, string line, int row)
         {
             string[] lineColumns = line.Split(';');
 
             if(scheme.Columns.Length != lineColumns.Length)
             {
-                DisplayErrorMessage(false, 0, 0);
+                DisplayErrorMessage(false, row, 0);
                 return false;
             }
             else
@@ -89,7 +89,7 @@ namespace Schema
             }
             else
             {
-                Console.WriteLine("Количество столбцов не совпадает.");
+                Console.WriteLine($"Количество столбцов не совпадает в {row} строке.");
             }
         }
     }
