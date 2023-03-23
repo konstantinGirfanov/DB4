@@ -10,9 +10,12 @@ namespace DB4
     {
         public static void Main()
         {
-            string path = "readers.json";
-            Scheme test = WorkWithScheme.ReadScheme(path);
-            Console.WriteLine(JsonSerializer.Serialize(test));
+            string pathScheme = "readers.json";
+            Scheme readers = WorkWithScheme.ReadScheme(pathScheme);
+
+            string pathData = "readersData.json";
+
+
         }
     }
 }

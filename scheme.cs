@@ -51,9 +51,17 @@ namespace Schema
 
         public SchemeData(List<Row> rows, Scheme scheme)
         {
-            Scheme = scheme;
             Rows = rows;
+            Scheme = scheme;
         }
+
+        public SchemeData(Scheme scheme)
+        {
+            Scheme = scheme;
+        }
+
+        public SchemeData()
+        { }
     }
 
     class Row
