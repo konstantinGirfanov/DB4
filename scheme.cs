@@ -60,15 +60,15 @@ namespace Schema
 
     class Row
     {
-        public Dictionary<SchemeColumn, object> Data { get; set; } = new Dictionary<SchemeColumn, object>();
+        public Dictionary<string, object> Data { get; set; } = new Dictionary<string, object>();
 
-        public Row(SchemeColumn column, string line)
+        public Row(Scheme scheme, string line)
         {
             string[] lines = line.Split(';');
 
             for (int i = 0; i < lines.Length; i++)
             {
-                Data.Add(column, lines[i]);
+                Data.Add(scheme.Columns[i].Name, lines[i]);
             }
         }
     }
@@ -147,7 +147,7 @@ namespace Schema
             {
                 if (IsCorrespondsToScheme(scheme, data[i], i))
                 {
-                    rows.Add(new Row(scheme.Columns[i], data[i]));
+                    rows.Add(new Row(scheme, data[i]));
                 }
             }
 
