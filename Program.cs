@@ -1,4 +1,8 @@
 ﻿using System;
+using System.IO;
+using System.Text.Json;
+using System.Text.Json.Serialization;
+using Schema;
 
 namespace DB4
 {
@@ -6,7 +10,9 @@ namespace DB4
     {
         public static void Main()
         {
-            Console.WriteLine("Hello world!");
+            string path = "readers.json";
+            Scheme test = Scheme.ReadScheme(path);
+            Console.WriteLine(JsonSerializer.Serialize(test));
         }
     }
 }
