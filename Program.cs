@@ -14,8 +14,9 @@ namespace DB4
             Scheme readers = WorkWithScheme.ReadScheme(pathScheme);
 
             string pathData = "readersData.json";
+            SchemeData readersData = new(readers);
 
-
+            readersData.Rows = WorkWithScheme.GetData(readers, pathData);
         }
     }
 }
