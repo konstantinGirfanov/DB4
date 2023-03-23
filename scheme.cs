@@ -1,12 +1,5 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using System.Text.Json;
+﻿using System.Text.Json;
 using System.Text.Json.Serialization;
-using System.Data.Common;
-using System.Net.Http.Headers;
 
 namespace Schema
 {
@@ -84,7 +77,7 @@ namespace Schema
         {
             string[] lineColumns = line.Split(';');
 
-            if(scheme.Columns.Length != lineColumns.Length)
+            if (scheme.Columns.Length != lineColumns.Length)
             {
                 DisplayErrorMessage(false, row, 0);
                 return false;
@@ -92,9 +85,9 @@ namespace Schema
             else
             {
                 bool isCorresponded = true;
-                for(int i = 0; i < lineColumns.Length; i++)
+                for (int i = 0; i < lineColumns.Length; i++)
                 {
-                    switch(scheme.Columns[i].Type)
+                    switch (scheme.Columns[i].Type)
                     {
                         case "int":
                             if (!int.TryParse(lineColumns[i], out int _))
@@ -156,7 +149,7 @@ namespace Schema
 
         public static void DisplayErrorMessage(bool isCorrectColumnCount, int row, int column)
         {
-            if(isCorrectColumnCount)
+            if (isCorrectColumnCount)
             {
                 Console.WriteLine($"Данные не совпадают в {row} строке {column} столбце.");
             }
