@@ -49,24 +49,25 @@ namespace Schema
         public List<Row> Rows { get; init; } = new List<Row>();
         private Scheme Scheme { get; init; }
 
-        public class Row
+        public SchemeData(List<Row> rows, Scheme scheme)
         {
-            public Dictionary<SchemeColumn, object> Data { get; set; }
-
-            public Row(SchemeColumn column, string line)
-            {
-                string[] lines = line.Split(';');
-
-                for(int i = 0; i < lines.Length; i++)
-                {
-                    Data.Add(column, lines[i]);
-                }
-            }
+            Scheme = scheme;
+            Rows = rows;
         }
+    }
 
-        public void AddRow(Row row)
+    class Row
+    {
+        public Dictionary<SchemeColumn, object> Data { get; set; } = new Dictionary<SchemeColumn, object>();
+
+        public Row(SchemeColumn column, string line)
         {
-            Rows.Add(row);
+            string[] lines = line.Split(';');
+
+            for (int i = 0; i < lines.Length; i++)
+            {
+                Data.Add(column, lines[i]);
+            }
         }
     }
 
@@ -135,18 +136,20 @@ namespace Schema
             }
         }
 
-        public static Dictionary<SchemeColumn, object> GetData(Scheme scheme, string path)
+        public static List<Row> GetData(Scheme scheme, string path)
         {
             string[] data = File.ReadAllLines(path);
-            Dictionary<SchemeColumn, object> result = new();
+            List<Row> rows = new List<Row>();
 
             for (int i = 1; i < data.Length; i++)
             {
                 if (IsCorrespondsToScheme(scheme, data[i], i))
                 {
-
+                    rows.Add(new Row(scheme.Columns[i], data[i]));
                 }
             }
+
+            return rows;
         }
 
         public static void DisplayErrorMessage(bool isCorrectColumnCount, int row, int column)
