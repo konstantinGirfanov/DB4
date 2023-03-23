@@ -65,5 +65,32 @@ namespace Schema
         {
             return JsonSerializer.Deserialize<Scheme>(File.ReadAllText(path));
         }
+
+        public static bool IsCorrespondsToScheme(Scheme scheme, string line)
+        {
+            string[] lineColumns = line.Split(';');
+
+            if(scheme.Columns.Length != lineColumns.Length)
+            {
+                DisplayErrorMessage(false, 0, 0);
+                return false;
+            }
+            else
+            {
+                return true;
+            }
+        }
+
+        public static void DisplayErrorMessage(bool isCorrectColumnCount, int row, int column)
+        {
+            if(isCorrectColumnCount)
+            {
+                Console.WriteLine($"Данные не совпадают в {row} строке {column} столбце.");
+            }
+            else
+            {
+                Console.WriteLine("Количество столбцов не совпадает.");
+            }
+        }
     }
 }
