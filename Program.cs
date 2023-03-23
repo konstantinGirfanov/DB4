@@ -11,7 +11,7 @@ namespace DB4
         public static void Main()
         {
             string path = "readers.json";
-            Scheme test = Scheme.ReadScheme(path);
+            Scheme test = WorkWithScheme.ReadScheme(path);
             Console.WriteLine(JsonSerializer.Serialize(test));
         }
     }
