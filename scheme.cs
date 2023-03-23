@@ -52,6 +52,16 @@ namespace Schema
         public class Row
         {
             public Dictionary<SchemeColumn, object> Data { get; set; }
+
+            public Row(SchemeColumn column, string line)
+            {
+                string[] lines = line.Split(';');
+
+                for(int i = 0; i < lines.Length; i++)
+                {
+                    Data.Add(column, lines[i]);
+                }
+            }
         }
 
         public void AddRow(Row row)
@@ -122,6 +132,20 @@ namespace Schema
                 }
 
                 return isCorresponded;
+            }
+        }
+
+        public static Dictionary<SchemeColumn, object> GetData(Scheme scheme, string path)
+        {
+            string[] data = File.ReadAllLines(path);
+            Dictionary<SchemeColumn, object> result = new();
+
+            for (int i = 1; i < data.Length; i++)
+            {
+                if (IsCorrespondsToScheme(scheme, data[i], i))
+                {
+
+                }
             }
         }
 
