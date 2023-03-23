@@ -79,7 +79,7 @@ namespace Schema
 
             if (scheme.Columns.Length != lineColumns.Length)
             {
-                DisplayErrorMessage(false, row, 0);
+                DisplayErrorMessage(false, row + 1, 0);
                 return false;
             }
             else
@@ -92,35 +92,35 @@ namespace Schema
                         case "int":
                             if (!int.TryParse(lineColumns[i], out int _))
                             {
-                                DisplayErrorMessage(true, row, i);
+                                DisplayErrorMessage(true, row + 1, i);
                                 isCorresponded = false;
                             }
                             break;
                         case "float":
                             if (!float.TryParse(lineColumns[i], out float _))
                             {
-                                DisplayErrorMessage(true, row, i);
+                                DisplayErrorMessage(true, row + 1, i);
                                 isCorresponded = false;
                             }
                             break;
                         case "double":
                             if (!double.TryParse(lineColumns[i], out double _))
                             {
-                                DisplayErrorMessage(true, row, i);
+                                DisplayErrorMessage(true, row + 1, i);
                                 isCorresponded = false;
                             }
                             break;
                         case "bool":
                             if (!bool.TryParse(lineColumns[i], out bool _))
                             {
-                                DisplayErrorMessage(true, row, i);
+                                DisplayErrorMessage(true, row + 1, i);
                                 isCorresponded = false;
                             }
                             break;
                         case "dateTime":
                             if (!DateTime.TryParse(lineColumns[i], out DateTime _))
                             {
-                                DisplayErrorMessage(true, row, i);
+                                DisplayErrorMessage(true, row + 1, i);
                                 isCorresponded = false;
                             }
                             break;
