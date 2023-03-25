@@ -13,6 +13,8 @@ namespace DB4
             SchemeData readersData = new(readers);
 
             readersData.Rows = WorkWithScheme.GetData(readers, pathData);
+
+            readersData.PrintData();
         }
     }
 }

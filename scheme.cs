@@ -49,11 +49,26 @@ namespace Schema
 
         public SchemeData()
         { }
+
+        public void PrintData()
+        {
+            Console.WriteLine($"Имя базы данных: { Scheme.Name }.");
+            Console.WriteLine("Названия столбцов:");
+            for (int i = 0; i < Scheme.Columns.Length; i++)
+            {
+                Console.Write(Scheme.Columns[i].Name + "  ");
+            }
+            Console.WriteLine("");
+            foreach(Row row in Rows)
+            {
+                row.PrintRow();
+            }
+        }
     }
 
     class Row
     {
-        public Dictionary<string, object> Data { get; set; } = new Dictionary<string, object>();
+        private Dictionary<string, object> Data { get; set; } = new Dictionary<string, object>();
 
         public Row(Scheme scheme, string line)
         {
@@ -63,6 +78,15 @@ namespace Schema
             {
                 Data.Add(scheme.Columns[i].Name, lines[i]);
             }
+        }
+
+        public void PrintRow()
+        {
+            foreach(KeyValuePair<string, object> column in Data)
+            {
+                Console.Write(column.Value + "  ");
+            }
+            Console.WriteLine();
         }
     }
 
@@ -134,7 +158,7 @@ namespace Schema
         public static List<Row> GetData(Scheme scheme, string path)
         {
             string[] data = File.ReadAllLines(path);
-            List<Row> rows = new List<Row>();
+            List<Row> rows = new();
 
             for (int i = 1; i < data.Length; i++)
             {
