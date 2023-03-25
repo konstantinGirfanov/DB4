@@ -6,13 +6,18 @@ namespace DB4
     {
         public static void Main()
         {
-            string pathScheme = "readers.json";
-            Scheme readers = WorkWithScheme.ReadScheme(pathScheme);
+            Console.WriteLine("Введите название схемы (например readers.json):");
+            var schemeName = Console.ReadLine();
 
-            string pathData = "readersData.json";
-            SchemeData readersData = new(readers);
+            var pathScheme = Directory.GetParent(Directory.GetCurrentDirectory()).Parent.Parent.FullName + "\\" + schemeName;
+            Scheme scheme = WorkWithScheme.ReadScheme(pathScheme);
 
-            readersData.Rows = WorkWithScheme.GetData(readers, pathData);
+            Console.WriteLine("Введите название файла данных для схемы (например readersData.txt):");
+            string dataName = Console.ReadLine();
+
+            string pathData = Directory.GetParent(Directory.GetCurrentDirectory()).Parent.Parent.FullName + "\\" + dataName;
+            SchemeData readersData = new(scheme);
+            readersData.Rows = WorkWithScheme.GetData(scheme, pathData);
 
             readersData.PrintData();
         }

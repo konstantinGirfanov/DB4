@@ -39,16 +39,14 @@ namespace Schema
 
     class SchemeData
     {
-        public List<Row> Rows { get; set; } = new List<Row>();
+        public List<Row> Rows { get; set; }
         private Scheme Scheme { get; init; }
 
         public SchemeData(Scheme scheme)
         {
             Scheme = scheme;
+            Rows = new List<Row>();
         }
-
-        public SchemeData()
-        { }
 
         public void PrintData()
         {
