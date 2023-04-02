@@ -45,19 +45,19 @@ namespace Schema
         public SchemeData(Scheme scheme, string path)
         {
             Scheme = scheme;
-            Rows = GetData(Scheme, path);
+            Rows = GetData(path);
         }
 
-        public static List<Row> GetData(Scheme scheme, string path)
+        public List<Row> GetData(string path)
         {
             string[] data = File.ReadAllLines(path);
             List<Row> rows = new();
 
             for (int i = 1; i < data.Length; i++)
             {
-                if (WorkWithScheme.IsCorrespondsToScheme(scheme, data[i], i))
+                if (WorkWithScheme.IsCorrespondsToScheme(Scheme, data[i], i))
                 {
-                    rows.Add(new Row(scheme, data[i]));
+                    rows.Add(new Row(Scheme, data[i]));
                 }
             }
 
@@ -131,35 +131,35 @@ namespace Schema
                         case "int":
                             if (!int.TryParse(lineColumns[i], out int _))
                             {
-                                DisplayErrorMessage(true, row + 1, i);
+                                DisplayErrorMessage(true, row + 1, i + 1);
                                 isCorresponded = false;
                             }
                             break;
                         case "float":
                             if (!float.TryParse(lineColumns[i], out float _))
                             {
-                                DisplayErrorMessage(true, row + 1, i);
+                                DisplayErrorMessage(true, row + 1, i + 1);
                                 isCorresponded = false;
                             }
                             break;
                         case "double":
                             if (!double.TryParse(lineColumns[i], out double _))
                             {
-                                DisplayErrorMessage(true, row + 1, i);
+                                DisplayErrorMessage(true, row + 1, i + 1);
                                 isCorresponded = false;
                             }
                             break;
                         case "bool":
                             if (!bool.TryParse(lineColumns[i], out bool _))
                             {
-                                DisplayErrorMessage(true, row + 1, i);
+                                DisplayErrorMessage(true, row + 1, i + 1);
                                 isCorresponded = false;
                             }
                             break;
                         case "dateTime":
                             if (!DateTime.TryParse(lineColumns[i], out DateTime _))
                             {
-                                DisplayErrorMessage(true, row + 1, i);
+                                DisplayErrorMessage(true, row + 1, i + 1);
                                 isCorresponded = false;
                             }
                             break;
