@@ -7,16 +7,11 @@ namespace DB4
         public static void Main()
         {
             Console.WriteLine("Введите название схемы (например readers.json):");
-            var schemeName = Console.ReadLine();
-
-            var pathScheme = Directory.GetParent(Directory.GetCurrentDirectory()).Parent.Parent.FullName + "\\" + "schemas" + "\\" + schemeName;
-
+            string schemeName = Console.ReadLine();
+            var pathScheme = WorkWithFiles.GetSchemePath(schemeName);
             Scheme scheme = WorkWithScheme.ReadScheme(pathScheme);
 
-            Console.WriteLine("Введите название файла данных для схемы (например readersData.txt):");
-            string dataName = Console.ReadLine();
-
-            string pathData = Directory.GetParent(Directory.GetCurrentDirectory()).Parent.Parent.FullName + "\\" + "data" + "\\" + dataName;
+            string pathData = WorkWithFiles.GetDataPath(schemeName);
             SchemeData readersData = new(scheme, pathData);
 
             readersData.PrintData();
