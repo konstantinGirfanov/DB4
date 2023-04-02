@@ -42,10 +42,26 @@ namespace Schema
         public List<Row> Rows { get; set; }
         private Scheme Scheme { get; init; }
 
-        public SchemeData(Scheme scheme)
+        public SchemeData(Scheme scheme, string path)
         {
             Scheme = scheme;
-            Rows = new List<Row>();
+            Rows = GetData(Scheme, path);
+        }
+
+        public static List<Row> GetData(Scheme scheme, string path)
+        {
+            string[] data = File.ReadAllLines(path);
+            List<Row> rows = new();
+
+            for (int i = 1; i < data.Length; i++)
+            {
+                if (WorkWithScheme.IsCorrespondsToScheme(scheme, data[i], i))
+                {
+                    rows.Add(new Row(scheme, data[i]));
+                }
+            }
+
+            return rows;
         }
 
         public void PrintData()
@@ -66,29 +82,30 @@ namespace Schema
 
     class Row
     {
-        private Dictionary<string, object> Data { get; set; } = new Dictionary<string, object>();
+        private Dictionary<SchemeColumn, object> Data { get; set; } = new Dictionary<SchemeColumn, object>();
 
         public Row(Scheme scheme, string line)
         {
-            string[] lines = line.Split(';');
+            string[] columnValues = line.Split(';');
 
-            for (int i = 0; i < lines.Length; i++)
+            for (int i = 0; i < columnValues.Length; i++)
             {
-                Data.Add(scheme.Columns[i].Name, lines[i]);
+                Data.Add(scheme.Columns[i], columnValues[i]);
             }
         }
 
         public void PrintRow()
         {
-            foreach(KeyValuePair<string, object> column in Data)
+            foreach(KeyValuePair<SchemeColumn, object> column in Data)
             {
                 Console.Write(column.Value + "  ");
             }
+
             Console.WriteLine();
         }
     }
 
-    class WorkWithScheme
+    static class WorkWithScheme
     {
         public static Scheme ReadScheme(string path)
         {
@@ -151,22 +168,6 @@ namespace Schema
 
                 return isCorresponded;
             }
-        }
-
-        public static List<Row> GetData(Scheme scheme, string path)
-        {
-            string[] data = File.ReadAllLines(path);
-            List<Row> rows = new();
-
-            for (int i = 1; i < data.Length; i++)
-            {
-                if (IsCorrespondsToScheme(scheme, data[i], i))
-                {
-                    rows.Add(new Row(scheme, data[i]));
-                }
-            }
-
-            return rows;
         }
 
         public static void DisplayErrorMessage(bool isCorrectColumnCount, int row, int column)

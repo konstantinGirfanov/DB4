@@ -16,8 +16,7 @@ namespace DB4
             string dataName = Console.ReadLine();
 
             string pathData = Directory.GetParent(Directory.GetCurrentDirectory()).Parent.Parent.FullName + "\\" + dataName;
-            SchemeData readersData = new(scheme);
-            readersData.Rows = WorkWithScheme.GetData(scheme, pathData);
+            SchemeData readersData = new(scheme, pathData);
 
             readersData.PrintData();
         }
